@@ -1,25 +1,28 @@
 {
   "format": 1,
   "restore": {
-    "/home/jhon/Documentos/Ultracar/backend/backend.csproj": {}
+    "C:\\Users\\higoj\\OneDrive\\Área de Trabalho\\Ultracar\\backend\\backend.csproj": {}
   },
   "projects": {
-    "/home/jhon/Documentos/Ultracar/backend/backend.csproj": {
+    "C:\\Users\\higoj\\OneDrive\\Área de Trabalho\\Ultracar\\backend\\backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "/home/jhon/Documentos/Ultracar/backend/backend.csproj",
+        "projectUniqueName": "C:\\Users\\higoj\\OneDrive\\Área de Trabalho\\Ultracar\\backend\\backend.csproj",
         "projectName": "backend",
-        "projectPath": "/home/jhon/Documentos/Ultracar/backend/backend.csproj",
-        "packagesPath": "/home/jhon/.nuget/packages/",
-        "outputPath": "/home/jhon/Documentos/Ultracar/backend/obj/",
+        "projectPath": "C:\\Users\\higoj\\OneDrive\\Área de Trabalho\\Ultracar\\backend\\backend.csproj",
+        "packagesPath": "C:\\Users\\higoj\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\higoj\\OneDrive\\Área de Trabalho\\Ultracar\\backend\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "/home/jhon/.nuget/NuGet/NuGet.Config"
+          "C:\\Users\\higoj\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -32,6 +35,11 @@
           "warnAsError": [
             "NU1605"
           ]
+        },
+        "restoreAuditProperties": {
+          "enableAudit": "true",
+          "auditLevel": "low",
+          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -76,7 +84,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.112/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
