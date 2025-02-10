@@ -29,8 +29,14 @@ namespace backend.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Estoque")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Nome")
                         .HasColumnType("text");
+
+                    b.Property<decimal>("Preco")
+                        .HasColumnType("numeric");
 
                     b.HasKey("Id");
 

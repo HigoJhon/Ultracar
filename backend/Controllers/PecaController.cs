@@ -1,3 +1,4 @@
+using backend.Models;
 using backend.Repository;
 using Microsoft.AspNetCore.Mvc;
 
@@ -24,6 +25,14 @@ namespace backend.Controllers
         public async Task<IActionResult> GetId(int id)
         {
             return Ok(await _repository.GetPeca(id));
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Create([FromBody] Peca peca)
+        {
+
+            var newPeca = await _repository.Add(peca);
+            return Ok(newPeca);
         }
     }
 }

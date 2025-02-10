@@ -20,12 +20,47 @@ namespace backend.Repository
         public async Task<Peca> GetPeca(int id)
         {
             var existPeca = await _context.Pecas.FindAsync(id);
-            if (existPeca == null)
+            if(existPeca == null)
             {
                 throw new ArgumentException("Peça não encontrada!");
             }
-
             return existPeca;
+        }
+
+        public async Task<Peca> Add(Peca peca)
+        {
+            var existingPeca = await _context.Pecas.FirstOrDefaultAsync(x => x.Nome == peca.Nome);
+            if (existingPeca != null)
+            {
+                throw new ArgumentException("Peça já cadastrada!");
+            }
+
+            _context.Pecas.Add(peca);
+            _context.SaveChanges();
+
+            return peca;
+        }
+
+        public async Task<Peca> Update(Peca peca)
+        {
+            var existPeca = await _context.Pecas.FindAsync(peca.Id) ??
+            throw new ArgumentException("Peça não existe!");
+
+            _context.Pecas.Update(peca);
+            _context.SaveChanges();
+            
+            return peca;
+        }
+
+        public async Task<Peca> Delete(int id)
+        {
+            var peca = await _context.Pecas.FindAsync(id) ??
+            throw new ArgumentException("Peça não existe!");
+
+            _context.Pecas.Remove(peca);
+            _context.SaveChanges();
+
+            return peca;
         }
     }
 }

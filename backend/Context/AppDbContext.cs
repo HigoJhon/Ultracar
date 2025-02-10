@@ -17,5 +17,4 @@ namespace backend.Context
             optionsBuilder.UseNpgsql(connectionString);
         }
     }
-
 }
