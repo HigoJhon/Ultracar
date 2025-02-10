@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace backend.Context
 {
-    public class AppContext : DbContext, IAppContext
+    public class AppDbContext : DbContext, IAppDbContext
     {
         public DbSet<Peca> Pecas { get; set; } = null!;
 
-        public AppContext(DbContextOptions<AppContext> options) : base(options)
+        public AppDbContext(DbContextOptions<AppDbContext> options) : base(options)
         {
         }
     }

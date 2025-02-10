@@ -3,7 +3,7 @@ using backend.Models;
 
 namespace backend.Context
 {
-    public interface IAppContext
+    public interface IAppDbContext
     {
         DbSet<Peca> Pecas { get; set; }
 
