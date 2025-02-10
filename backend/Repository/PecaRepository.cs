@@ -6,8 +6,8 @@ namespace backend.Repository
 {
     public class PecaRepository : IPecaRepository
     {
-        private readonly IAppContext _context;
-        public PecaRepository(IAppContext context)
+        private readonly IAppDbContext _context;
+        public PecaRepository(IAppDbContext context)
         {
             _context = context;
         }
