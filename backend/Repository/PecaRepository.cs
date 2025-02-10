@@ -1,5 +1,6 @@
 using backend.Context;
 using backend.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace backend.Repository
 {
@@ -11,20 +12,14 @@ namespace backend.Repository
             _context = context;
         }
 
-        public List<Peca> GetAll()
+        public async Task<List<Peca>> GetAll()
         {
-            return _context.Pecas.ToList();
+            return await _context.Pecas.ToListAsync();
         }
 
-        public Peca GetPeca(int id)
+        public async Task<Peca> GetPeca(int id)
         {
-            var existPeca = _context.Pecas.Find(id);
-            if (existPeca == null)
-            {
-                throw new ArgumentException("Peça não encontrada!");
-            }
-
-            return existPeca;
+            return await _context.Pecas.FindAsync(id);
         }
     }
 }
