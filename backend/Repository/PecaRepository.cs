@@ -19,7 +19,13 @@ namespace backend.Repository
 
         public async Task<Peca> GetPeca(int id)
         {
-            return await _context.Pecas.FindAsync(id);
+            var existPeca = await _context.Pecas.FindAsync(id);
+            if (existPeca == null)
+            {
+                throw new ArgumentException("Peça não encontrada!");
+            }
+
+            return existPeca;
         }
     }
 }
