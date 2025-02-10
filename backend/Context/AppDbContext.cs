@@ -14,7 +14,7 @@ namespace backend.Context
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             var connectionString = "Host=localhost;Port=5432;Database=oficina_db;Username=postgres;Password=Postgres123!";
-            optionsBuilder.UseNpgsql(connectionString); // Usando o PostgreSQL
+            optionsBuilder.UseNpgsql(connectionString);
         }
     }
 

@@ -165,6 +165,8 @@ C:\Users\higoj\OneDrive\Área de Trabalho\Ultracar\backend\bin\Debug\net8.0\Micr
 C:\Users\higoj\OneDrive\Área de Trabalho\Ultracar\backend\bin\Debug\net8.0\Microsoft.Extensions.Primitives.dll
 C:\Users\higoj\OneDrive\Área de Trabalho\Ultracar\backend\bin\Debug\net8.0\Microsoft.OpenApi.dll
 C:\Users\higoj\OneDrive\Área de Trabalho\Ultracar\backend\bin\Debug\net8.0\Mono.TextTemplating.dll
+C:\Users\higoj\OneDrive\Área de Trabalho\Ultracar\backend\bin\Debug\net8.0\Npgsql.dll
+C:\Users\higoj\OneDrive\Área de Trabalho\Ultracar\backend\bin\Debug\net8.0\Npgsql.EntityFrameworkCore.PostgreSQL.dll
 C:\Users\higoj\OneDrive\Área de Trabalho\Ultracar\backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.Swagger.dll
 C:\Users\higoj\OneDrive\Área de Trabalho\Ultracar\backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerGen.dll
 C:\Users\higoj\OneDrive\Área de Trabalho\Ultracar\backend\bin\Debug\net8.0\Swashbuckle.AspNetCore.SwaggerUI.dll
