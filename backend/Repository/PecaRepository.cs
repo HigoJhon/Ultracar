@@ -43,8 +43,11 @@ namespace backend.Repository
 
         public async Task<Peca> Update(Peca peca)
         {
-            var existPeca = await _context.Pecas.FindAsync(peca.Id) ??
-            throw new ArgumentException("Peça não existe!");
+            var existPeca = await _context.Pecas.FindAsync(peca.Id);
+            if (existPeca == null)
+            {
+                throw new ArgumentException("Peça não encontrada!");
+            }
 
             _context.Pecas.Update(peca);
             _context.SaveChanges();
@@ -54,9 +57,12 @@ namespace backend.Repository
 
         public async Task<Peca> Delete(int id)
         {
-            var peca = await _context.Pecas.FindAsync(id) ??
-            throw new ArgumentException("Peça não existe!");
-
+            var peca = await _context.Pecas.FindAsync(id);
+            if (peca == null)
+            {
+                throw new ArgumentException("Peça não encontrada!");
+            }
+            
             _context.Pecas.Remove(peca);
             _context.SaveChanges();
 
