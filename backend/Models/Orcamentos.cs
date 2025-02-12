@@ -1,15 +1,15 @@
 using System.ComponentModel.DataAnnotations;
 
-namespace backend.Models
+namespace backend.Models 
 {
-    public class Orcamentos
+    public class Orcamento
     {
         [Key]
         public int Id { get; set; }
-        public int Numeracao { get; set; }
-        public string ?PlacaVeiculo { get; set; }
-        public string ?NomeCliente { get; set; }
-        public DateTime DiaOrcamento { get; set; }
-        public List<OrcamentoPecas> OrcamentoPecas { get; set; } = new();
+        public int Numero { get; set; }
+        public string Placa { get; set; }
+        public string NameCliente { get; set; }
+
+        public List<OrcamentoPecas> Pecas { get; set; } = new();
     }
 }

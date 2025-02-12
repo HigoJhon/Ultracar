@@ -17,7 +17,7 @@ namespace backend.Repository
             return await _context.Pecas.ToListAsync();
         }
 
-        public async Task<Peca> GetPeca(int id)
+        public async Task<Peca> Get(int id)
         {
             var existPeca = await _context.Pecas.FindAsync(id);
             if(existPeca == null)
@@ -27,7 +27,7 @@ namespace backend.Repository
             return existPeca;
         }
 
-        public async Task<Peca> Add(Peca peca)
+        public async Task<Peca> Create(Peca peca)
         {
             var existingPeca = await _context.Pecas.FirstOrDefaultAsync(x => x.Nome == peca.Nome);
             if (existingPeca != null)
