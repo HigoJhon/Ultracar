@@ -7,8 +7,8 @@ namespace backend.Repository
         Task<Orcamento> GetById(int id);
         Task<Orcamento> GetByNumero(string numero);
         Task<IEnumerable<Orcamento>> GetAll();
-        Task Create(Orcamento orcamento);
-        Task Update(Orcamento orcamento);
-        Task Delete(int id);
+        Task<Orcamento> Create(Orcamento orcamento);
+        Task<Orcamento> Update(Orcamento orcamento);
+        Task<Orcamento> Delete(int id);
     }
 }
