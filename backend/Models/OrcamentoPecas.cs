@@ -15,7 +15,8 @@ namespace backend.Models
         public int PecaId { get; set; }
         public Peca Peca { get; set; }
 
-        public int Status { get; set; }
+        public int Quantidade { get; set; }
+        public string Status { get; set; }
         public decimal PrecoUnitario { get; set; }
     }
 }

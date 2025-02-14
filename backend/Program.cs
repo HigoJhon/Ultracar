@@ -8,8 +8,6 @@ builder.Services.AddControllers();
 builder.Services.AddDbContext<AppDbContext>();
 builder.Services.AddScoped<IAppDbContext, AppDbContext>();
 builder.Services.AddScoped<IPecaRepository, PecaRepository>();
-builder.Services.AddScoped<IClientesRepository, ClientesRepository>();
-builder.Services.AddScoped<IOrcamentoRepository, OrcamentosRepository>();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
