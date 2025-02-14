@@ -24,21 +24,21 @@ namespace backend.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetId(int id)
         {
-            return Ok(await _repository.GetPeca(id));
+            return Ok(await _repository.Get(id));
         }
 
         [HttpPost]
         public async Task<IActionResult> Create([FromBody] Peca peca)
         {
 
-            var newPeca = await _repository.Add(peca);
+            var newPeca = await _repository.Create(peca);
             return Ok(newPeca);
         }
 
         [HttpPut("{id}")]
         public async Task<IActionResult> Update(int id, [FromBody] Peca peca)
         {
-            var pecaExist = await _repository.GetPeca(id);
+            var pecaExist = await _repository.Get(id);
 
             if (pecaExist == null)
             {
@@ -56,7 +56,7 @@ namespace backend.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var peca = await _repository.GetPeca(id);
+            var peca = await _repository.Get(id);
             if (peca == null)
             {
                 return NotFound("Peça não encontrada!");
