@@ -10,11 +10,11 @@ namespace backend.Models
 
         [ForeignKey("Peca")]
         public int PecaId { get; set; }
-        public Peca Peca { get; set; }
-
-        public int Quantidade { get; set; }  // Positivo (entrada) ou Negativo (saída)
-        public string Tipo { get; set; }  // "Entrada" ou "Saída"
+        public int Quantidade { get; set; }
         public DateTime Data { get; set; }
+        public string Tipo { get; set; }
+
+        public Peca Peca { get; set; }
     }
 
 }

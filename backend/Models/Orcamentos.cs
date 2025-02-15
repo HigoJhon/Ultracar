@@ -6,7 +6,7 @@ namespace backend.Models
     {
         [Key]
         public int Id { get; set; }
-        public string ?Numero { get; set; }
+        public int Numero { get; set; }
         public string ?Placa { get; set; }
         public string ?NameCliente { get; set; }
 

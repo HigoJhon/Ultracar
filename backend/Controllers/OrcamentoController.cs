@@ -16,39 +16,74 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Get()
+        public async Task<ActionResult<IEnumerable<Orcamento>>> GetAll()
         {
-            return Ok(await _repository.GetAll());
+            var orcamentos = await _repository.GetAll();    
+            return Ok(orcamentos);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
+        public async Task<ActionResult<Orcamento>> GetById(int id)
         {
             var orcamento = await _repository.GetById(id);
             if (orcamento == null)
-            return NotFound();
-
+            {
+                return NotFound();
+            }
             return Ok(orcamento);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Post([FromBody] OrcamentoDTO orcamento)
+        public async Task<ActionResult> Create([FromBody] OrcamentoDTO orcamento)
         {
-            var newOrcamento = new Orcamento
+            var orcamentoModel = new Orcamento
             {
-              Numero = orcamento.Numero,
-              Placa = orcamento.PlacaVeiculo,
-              NameCliente = orcamento.NomeCliente,
-              Pecas = orcamento.Pecas.Select(p => new OrcamentoPecas 
-              {
-                PecaId = p.PecaId,
-                Quantidade = p.Quantidade,
-                Status = "Em Espera",
-              }).ToList()
+                Numero = orcamento.Numero,
+                Placa = orcamento.PlacaVeiculo,
+                NameCliente = orcamento.NomeCliente,
+                Pecas = orcamento.Pecas.Select(x => new OrcamentoPecas
+                {
+                    PecaId = x.PecaId,
+                    Quantidade = x.Quantidade
+                }).ToList()
             };
 
-            await _repository.Create(newOrcamento);
-            return Created("", newOrcamento);
+            await _repository.Add(orcamentoModel);
+
+            return Created("", orcamentoModel);
+        }
+
+        [HttpPut("{id}")]
+        public async Task<ActionResult> Update([FromBody] OrcamentoDTO orcamento, int id)
+        {
+            var existingOrcamento = await _repository.GetById(id);
+            if (existingOrcamento == null)
+            {
+                return NotFound("Orçamento não encontrado.");
+            }
+
+            var orcamentoModel = new Orcamento
+            {
+                Id = id,
+                Numero = orcamento.Numero,
+                Placa = orcamento.PlacaVeiculo,
+                NameCliente = orcamento.NomeCliente,
+                Pecas = orcamento.Pecas.Select(x => new OrcamentoPecas
+                {
+                    PecaId = x.PecaId,
+                    Quantidade = x.Quantidade
+                }).ToList()
+            };
+
+            await _repository.Update(orcamentoModel);
+            return NoContent();
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<ActionResult> Delete(int id)
+        {
+            await _repository.Delete(id);
+            return NoContent();
         }
     }
 }

@@ -1,5 +1,6 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Text.Json.Serialization;
 
 namespace backend.Models
 {
@@ -9,14 +10,20 @@ namespace backend.Models
         public int Id { get; set; }
         [ForeignKey("Orcamento")]
         public int OrcamentoId { get; set; }
-        public Orcamento Orcamento { get; set; }
-
         [ForeignKey("Peca")]
         public int PecaId { get; set; }
-        public Peca Peca { get; set; }
-
         public int Quantidade { get; set; }
-        public string Status { get; set; }
-        public decimal PrecoUnitario { get; set; }
+
+        public EstadoPeca Estado { get; set; }
+        [JsonIgnore]
+        public Orcamento ?Orcamento { get; set; }
+        public Peca ?Peca { get; set; }
+    }
+
+    public enum EstadoPeca
+    {
+        EmEspera,
+        LiberadoParaCompra,
+        Entregue
     }
 }
