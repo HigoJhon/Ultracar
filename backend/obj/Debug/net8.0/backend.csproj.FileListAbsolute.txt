@@ -270,3 +270,4 @@ C:/Users/higoj/OneDrive/Área de Trabalho/Ultracar/backend/obj/Debug/net8.0/back
 C:/Users/higoj/OneDrive/Área de Trabalho/Ultracar/backend/obj/Debug/net8.0/ref/backend.dll
 /home/jhon/Documentos/Ultracar/backend/bin/Debug/net8.0/Npgsql.dll
 /home/jhon/Documentos/Ultracar/backend/bin/Debug/net8.0/Npgsql.EntityFrameworkCore.PostgreSQL.dll
+/home/jhon/Documentos/Ultracar/backend/bin/Debug/net8.0/Newtonsoft.Json.dll

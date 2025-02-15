@@ -5,8 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace backend.Controllers
 {
     [ApiController]
-    [Route("pecas")]
-
+    [Route("[controller]")]
     public class PecaController : Controller
     {
         private readonly IPecaRepository _repository;
@@ -16,54 +15,55 @@ namespace backend.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetAll() 
+        public async Task<ActionResult<IEnumerable<Peca>>> GetAll()
         {
-            return Ok(await _repository.GetAll());
+            var pecas = await _repository.GetAll();
+            return Ok(pecas);
         }
 
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetId(int id)
+        public async Task<ActionResult<Peca>> GetById(int id)
         {
-            return Ok(await _repository.GetPeca(id));
+            var peca = await _repository.GetById(id);
+            if (peca == null)
+                return NotFound("Peça não encontrada.");
+            return Ok(peca);
         }
 
         [HttpPost]
-        public async Task<IActionResult> Create([FromBody] Peca peca)
+        public async Task<ActionResult> Create(Peca peca)
         {
-
-            var newPeca = await _repository.Add(peca);
-            return Ok(newPeca);
+            await _repository.Add(peca);
+            return CreatedAtAction(nameof(GetById), new { id = peca.Id }, peca);
         }
 
         [HttpPut("{id}")]
-        public async Task<IActionResult> Update(int id, [FromBody] Peca peca)
+        public async Task<ActionResult> Update(int id, Peca peca)
         {
-            var pecaExist = await _repository.GetPeca(id);
+            if (id != peca.Id)
+                return BadRequest("ID da peça não corresponde.");
 
-            if (pecaExist == null)
-            {
-                return NotFound("Peça não encontrada!");
-            }
+            var existingPeca = await _repository.GetById(id);
+            if (existingPeca == null)
+                return NotFound("Peça não encontrada.");
 
-            pecaExist.Nome = peca.Nome != "" ? peca.Nome : pecaExist.Nome;
-            pecaExist.Estoque = peca.Estoque != 0 ? peca.Estoque : pecaExist.Estoque;
-            pecaExist.Preco = peca.Preco != 0 ? peca.Preco : pecaExist.Preco;
-            
-            var updatedPeca = await _repository.Update(pecaExist);
-            return Ok(updatedPeca);
+            existingPeca.Nome = peca.Nome;
+            existingPeca.Estoque = peca.Estoque;
+            existingPeca.Preco = peca.Preco;
+
+            await _repository.Update(existingPeca);
+            return NoContent();
         }
 
         [HttpDelete("{id}")]
-        public async Task<IActionResult> Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
-            var peca = await _repository.GetPeca(id);
+            var peca = await _repository.GetById(id);
             if (peca == null)
-            {
-                return NotFound("Peça não encontrada!");
-            }
+                return NotFound("Peça não encontrada.");
 
             await _repository.Delete(id);
-            return Ok("Peça deletada com sucesso!");
+            return NoContent();
         }
     }
 }
