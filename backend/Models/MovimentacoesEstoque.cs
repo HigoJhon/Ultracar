@@ -15,6 +15,13 @@ namespace backend.Models
         public string Tipo { get; set; }
 
         public Peca Peca { get; set; }
+        public TipoMovimentacao tipoMovimentacao { get; set; }
+    }
+
+        public enum TipoMovimentacao
+    {
+        Entrada,
+        Saida
     }
 
 }

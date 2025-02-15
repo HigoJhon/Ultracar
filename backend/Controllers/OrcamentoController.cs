@@ -44,7 +44,8 @@ namespace backend.Controllers
                 Pecas = orcamento.Pecas.Select(x => new OrcamentoPecas
                 {
                     PecaId = x.PecaId,
-                    Quantidade = x.Quantidade
+                    Quantidade = x.Quantidade,
+                    Estado = EstadoPeca.EmEspera
                 }).ToList()
             };
 

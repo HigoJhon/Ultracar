@@ -1,28 +1,25 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\higoj\\OneDrive\\Área de Trabalho\\Ultracar\\backend\\backend.csproj": {}
+    "/home/jhon/Documentos/Ultracar/backend/backend.csproj": {}
   },
   "projects": {
-    "C:\\Users\\higoj\\OneDrive\\Área de Trabalho\\Ultracar\\backend\\backend.csproj": {
+    "/home/jhon/Documentos/Ultracar/backend/backend.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\higoj\\OneDrive\\Área de Trabalho\\Ultracar\\backend\\backend.csproj",
+        "projectUniqueName": "/home/jhon/Documentos/Ultracar/backend/backend.csproj",
         "projectName": "backend",
-        "projectPath": "C:\\Users\\higoj\\OneDrive\\Área de Trabalho\\Ultracar\\backend\\backend.csproj",
-        "packagesPath": "C:\\Users\\higoj\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\higoj\\OneDrive\\Área de Trabalho\\Ultracar\\backend\\obj\\",
+        "projectPath": "/home/jhon/Documentos/Ultracar/backend/backend.csproj",
+        "packagesPath": "/home/jhon/.nuget/packages/",
+        "outputPath": "/home/jhon/Documentos/Ultracar/backend/obj/",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\higoj\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "/home/jhon/.nuget/NuGet/NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net8.0"
         ],
         "sources": {
-          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
-          "C:\\Program Files\\dotnet\\library-packs": {},
           "https://api.nuget.org/v3/index.json": {}
         },
         "frameworks": {
@@ -35,11 +32,6 @@
           "warnAsError": [
             "NU1605"
           ]
-        },
-        "restoreAuditProperties": {
-          "enableAudit": "true",
-          "auditLevel": "low",
-          "auditMode": "direct"
         }
       },
       "frameworks": {
@@ -59,6 +51,10 @@
               "suppressParent": "All",
               "target": "Package",
               "version": "[9.0.1, )"
+            },
+            "Newtonsoft.Json": {
+              "target": "Package",
+              "version": "[13.0.3, )"
             },
             "Npgsql.EntityFrameworkCore.PostgreSQL": {
               "target": "Package",
@@ -88,7 +84,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\8.0.400/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/8.0.112/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
