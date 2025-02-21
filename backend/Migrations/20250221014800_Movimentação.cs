@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialCreate : Migration
+    public partial class Movimentação : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -94,7 +94,8 @@ namespace backend.Migrations
                     PecaId = table.Column<int>(type: "integer", nullable: false),
                     Quantidade = table.Column<int>(type: "integer", nullable: false),
                     Data = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Tipo = table.Column<string>(type: "text", nullable: false)
+                    Tipo = table.Column<string>(type: "text", nullable: false),
+                    tipoMovimentacao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -126,13 +127,13 @@ namespace backend.Migrations
                         column: x => x.OrcamentoId,
                         principalTable: "Orcamentos",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_OrcamentoPecas_Pecas_PecaId",
                         column: x => x.PecaId,
                         principalTable: "Pecas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

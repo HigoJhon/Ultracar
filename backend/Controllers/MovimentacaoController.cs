@@ -1,3 +1,4 @@
+using backend.Dto;
 using backend.Models;
 using backend.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -32,18 +33,48 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Adicionar([FromBody] MovimentacaoEstoque movimentacao)
+        public async Task<ActionResult<MovimentacaoEstoque>> Adicionar([FromBody] MovimentacaoEstoqueCreateDTO movimentacaoDTO)
         {
+            var movimentacao = new MovimentacaoEstoque
+            {
+                PecaId = movimentacaoDTO.PecaId,
+                Quantidade = movimentacaoDTO.Quantidade,
+                tipoMovimentacao = movimentacaoDTO.tipoMovimentacao
+            };
+
+            var addedMovimentacao = await _repository.Add(movimentacao); 
+            return CreatedAtAction(nameof(ObterPorId), new { id = addedMovimentacao.Id }, addedMovimentacao); 
+        }
+
+        [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] MovimentacaoEstoqueUpdateDTO movimentacaoDTO)
+        {
+            var existingMovimentacao = await _repository.GetById(id);
+            if (existingMovimentacao == null)
+            {
+                return NotFound(new { message = "Movimentação não encontrada." });
+            }
+
+            existingMovimentacao.PecaId = movimentacaoDTO.PecaId;
+            existingMovimentacao.Quantidade = movimentacaoDTO.Quantidade;
+            existingMovimentacao.tipoMovimentacao = movimentacaoDTO.tipoMovimentacao;
+
+            var updatedMovimentacao = await _repository.Update(existingMovimentacao);
+
+            return Ok(updatedMovimentacao);
+        }
+
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> Deletar(int id)
+        {
+            var movimentacao = await _repository.GetById(id);
             if (movimentacao == null)
-                return BadRequest("Dados inválidos.");
+            {
+                return NotFound(new { message = "Movimentação não encontrada." });
+            }
 
-            await _repository.Add(movimentacao);
-            var sucesso = await _repository.SalvarAsync();
-
-            if (!sucesso)
-                return StatusCode(500, "Erro ao salvar movimentação.");
-
-            return CreatedAtAction(nameof(ObterPorId), new { id = movimentacao.Id }, movimentacao);
+            return NoContent();
         }
     }
 }

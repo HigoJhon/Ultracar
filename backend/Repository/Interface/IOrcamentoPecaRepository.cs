@@ -10,6 +10,6 @@ namespace backend.Repository
         Task<OrcamentoPecas> Add(OrcamentoPecas orcamentoPeca);
         Task<OrcamentoPecas> Update(OrcamentoPecas orcamentoPeca);
         Task<bool> Delete(int id);
-        Task<bool> UpdateEstado(int id, string estado);
+        Task<bool> UpdateEstado(int id, EstadoPeca estado);
     }
 }

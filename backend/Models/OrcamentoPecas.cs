@@ -14,7 +14,7 @@ namespace backend.Models
         public int PecaId { get; set; }
         public int Quantidade { get; set; }
 
-        public EstadoPeca Estado { get; set; }
+        public EstadoPeca Estado { get; set; } = EstadoPeca.EmEspera;
         [JsonIgnore]
         public Orcamento ?Orcamento { get; set; }
         public Peca ?Peca { get; set; }

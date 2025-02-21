@@ -94,6 +94,9 @@ namespace backend.Migrations
                         .IsRequired()
                         .HasColumnType("text");
 
+                    b.Property<int>("tipoMovimentacao")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
                     b.HasIndex("PecaId");
@@ -213,13 +216,13 @@ namespace backend.Migrations
                     b.HasOne("backend.Models.Orcamento", "Orcamento")
                         .WithMany("Pecas")
                         .HasForeignKey("OrcamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("backend.Models.Peca", "Peca")
                         .WithMany()
                         .HasForeignKey("PecaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Orcamento");

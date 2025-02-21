@@ -12,8 +12,8 @@ using backend.Context;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250215023414_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20250221014800_Movimentação")]
+    partial class Movimentação
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -96,6 +96,9 @@ namespace backend.Migrations
                     b.Property<string>("Tipo")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("tipoMovimentacao")
+                        .HasColumnType("integer");
 
                     b.HasKey("Id");
 
@@ -216,13 +219,13 @@ namespace backend.Migrations
                     b.HasOne("backend.Models.Orcamento", "Orcamento")
                         .WithMany("Pecas")
                         .HasForeignKey("OrcamentoId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.HasOne("backend.Models.Peca", "Peca")
                         .WithMany()
                         .HasForeignKey("PecaId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.Restrict)
                         .IsRequired();
 
                     b.Navigation("Orcamento");

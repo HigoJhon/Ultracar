@@ -39,18 +39,21 @@ namespace backend.Repository
             if(exist == null)
             throw new ArgumentException("Orçamento não existe!");
 
-            _context.Orcamentos.Update(orcamento);
+            exist.Numero = orcamento.Numero == 0 ? exist.Numero : orcamento.Numero;
+            exist.Placa = orcamento.Placa == "" ? exist.Placa : orcamento.Placa;
+            exist.NameCliente = orcamento.NameCliente == "" ? exist.NameCliente : orcamento.NameCliente;
+
             _context.SaveChanges();
         }
 
         public async Task Delete(int id)
         {
             var orcamento = await _context.Orcamentos.FindAsync(id);
-            if (orcamento != null)
-            {
-                _context.Orcamentos.Remove(orcamento);
-                _context.SaveChanges();
-            }
+            if (orcamento == null)
+                throw new DllNotFoundException("Orçamento não encontrado.");
+            
+            _context.Orcamentos.Remove(orcamento);
+            _context.SaveChanges();
         }
     }        
 }

@@ -6,7 +6,8 @@ namespace backend.Repositories
     {
         Task<IEnumerable<MovimentacaoEstoque>> GetAll();
         Task<MovimentacaoEstoque> GetById(int id);
-        Task Add(MovimentacaoEstoque movimentacao);
-        Task<bool> SalvarAsync();
+        Task<MovimentacaoEstoque> Add(MovimentacaoEstoque movimentacao);
+        Task<MovimentacaoEstoque> Update(MovimentacaoEstoque movimentacao);
+        Task<bool> Delete(int id);
     }
 }

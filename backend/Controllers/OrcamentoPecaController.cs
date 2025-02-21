@@ -35,7 +35,7 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] OrcamentoPecaDTO orcamentoPecaDto)
+        public async Task<ActionResult> Create([FromBody] PecaOrcamentoCreateDTO orcamentoPecaDto)
         {
             var orcamentoPecaModel = new OrcamentoPecas
             {
@@ -51,24 +51,20 @@ namespace backend.Controllers
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update([FromBody] OrcamentoPecaDTO orcamentoPecaDto, int id)
+        public async Task<ActionResult> Update([FromBody] PecaOrcamentoUpdateDTO orcamentoPecaDto, int id)
         {
-            var existingOrcamentoPeca = await _repository.GetById(id);
-            if (existingOrcamentoPeca == null)
+            var existOrcamento = await _repository.GetById(id);
+            if (existOrcamento == null)
             {
                 return NotFound("Relação Orçamento-Peça não encontrada.");
             }
 
-            var orcamentoPecaModel = new OrcamentoPecas
-            {
-                Id = id,
-                OrcamentoId = orcamentoPecaDto.OrcamentoId,
-                PecaId = orcamentoPecaDto.PecaId,
-                Quantidade = orcamentoPecaDto.Quantidade,
-                Estado = EstadoPeca.EmEspera
-            };
+            existOrcamento.OrcamentoId = orcamentoPecaDto.OrcamentoId;
+            existOrcamento.PecaId = orcamentoPecaDto.PecaId;
+            existOrcamento.Quantidade = orcamentoPecaDto.Quantidade;
+            existOrcamento.Estado = orcamentoPecaDto.Estado;
 
-            await _repository.Update(orcamentoPecaModel);
+            await _repository.Update(existOrcamento);
             return NoContent();
         }
 
@@ -80,7 +76,7 @@ namespace backend.Controllers
         }
 
         [HttpPatch("{id}/estado")]
-        public async Task<ActionResult> UpdateEstado(int id, [FromBody] string estado)
+        public async Task<ActionResult> UpdateEstado(int id, [FromBody] EstadoPeca estado)
         {
             var updated = await _repository.UpdateEstado(id, estado);
             if (!updated) return NotFound("Relação Orçamento-Peça não encontrada.");

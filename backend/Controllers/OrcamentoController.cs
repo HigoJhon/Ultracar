@@ -10,9 +10,13 @@ namespace backend.Controllers
     public class OrcamentoController : Controller
     {
         private readonly IOrcamentoRepository _repository;
-        public OrcamentoController(IOrcamentoRepository repository)
+        private readonly IOrcamentoPecaRepository _orcamentoPecaRepository;
+        private readonly IPecaRepository _pecaRepository;
+        public OrcamentoController(IOrcamentoRepository repository, IOrcamentoPecaRepository orcamentoPecaRepository, IPecaRepository pecaRepository)
         {
             _repository = repository;
+            _orcamentoPecaRepository = orcamentoPecaRepository;
+            _pecaRepository = pecaRepository;
         }
 
         [HttpGet]
@@ -28,55 +32,75 @@ namespace backend.Controllers
             var orcamento = await _repository.GetById(id);
             if (orcamento == null)
             {
-                return NotFound();
+                return NotFound(new { message = "Orçamento não encontrado." });
             }
             return Ok(orcamento);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create([FromBody] OrcamentoDTO orcamento)
+        public async Task<ActionResult<Orcamento>> Create([FromBody] OrcamentoCreateDTO orcamentoDTO)
         {
-            var orcamentoModel = new Orcamento
+            var orcamento = new Orcamento
             {
-                Numero = orcamento.Numero,
-                Placa = orcamento.PlacaVeiculo,
-                NameCliente = orcamento.NomeCliente,
-                Pecas = orcamento.Pecas.Select(x => new OrcamentoPecas
-                {
-                    PecaId = x.PecaId,
-                    Quantidade = x.Quantidade,
-                    Estado = EstadoPeca.EmEspera
-                }).ToList()
+                Numero = orcamentoDTO.Numero,
+                Placa = orcamentoDTO.PlacaVeiculo,
+                NameCliente = orcamentoDTO.NomeCliente
             };
 
-            await _repository.Add(orcamentoModel);
+            await _repository.Add(orcamento);
 
-            return Created("", orcamentoModel);
+            foreach (var pecaDTO in orcamentoDTO.Pecas)
+            {
+                if (!await _pecaRepository.ExistInEstoque(pecaDTO.PecaId, pecaDTO.Quantidade))
+                    return BadRequest(new { message = $"A peça {pecaDTO.PecaId} não possui estoque suficiente." });
+
+                var orcamentoPeca = new OrcamentoPecas
+                {
+                    OrcamentoId = orcamento.Id,
+                    PecaId = pecaDTO.PecaId,
+                    Quantidade = pecaDTO.Quantidade,
+                    Estado = EstadoPeca.EmEspera
+                };
+                await _orcamentoPecaRepository.Add(orcamentoPeca);
+            }
+
+            return CreatedAtAction(nameof(GetById), new { id = orcamento.Id }, orcamento);
         }
 
-        [HttpPut("{id}")]
-        public async Task<ActionResult> Update([FromBody] OrcamentoDTO orcamento, int id)
+       [HttpPut("{id}")]
+        public async Task<IActionResult> Update(int id, [FromBody] OrcamentoUpdateDTO orcamentoDTO)
         {
             var existingOrcamento = await _repository.GetById(id);
             if (existingOrcamento == null)
             {
-                return NotFound("Orçamento não encontrado.");
+                return NotFound(new { message = "Orçamento não encontrado." });
             }
 
-            var orcamentoModel = new Orcamento
-            {
-                Id = id,
-                Numero = orcamento.Numero,
-                Placa = orcamento.PlacaVeiculo,
-                NameCliente = orcamento.NomeCliente,
-                Pecas = orcamento.Pecas.Select(x => new OrcamentoPecas
-                {
-                    PecaId = x.PecaId,
-                    Quantidade = x.Quantidade
-                }).ToList()
-            };
+            existingOrcamento.Numero = orcamentoDTO.Numero;
+            existingOrcamento.Placa = orcamentoDTO.PlacaVeiculo;
+            existingOrcamento.NameCliente = orcamentoDTO.NomeCliente;
 
-            await _repository.Update(orcamentoModel);
+            var existingPecas = await _orcamentoPecaRepository.GetByOrcamentoId(id);
+            foreach (var peca in existingPecas)
+            {
+                await _orcamentoPecaRepository.Delete(peca.Id);
+            }
+
+            foreach (var pecaDTO in orcamentoDTO.Pecas)
+            {
+                if (!await _pecaRepository.ExistInEstoque(pecaDTO.PecaId, pecaDTO.Quantidade))
+                    return BadRequest(new { message = $"A peça {pecaDTO.PecaId} não possui estoque suficiente." });
+
+                var orcamentoPeca = new OrcamentoPecas
+                {
+                    OrcamentoId = id,
+                    PecaId = pecaDTO.PecaId,
+                    Quantidade = pecaDTO.Quantidade
+                };
+                await _orcamentoPecaRepository.Add(orcamentoPeca);
+            }
+
+            await _repository.Update(existingOrcamento);
             return NoContent();
         }
 

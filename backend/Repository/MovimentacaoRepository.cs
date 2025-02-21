@@ -26,14 +26,37 @@ namespace backend.Repository
                 .FirstOrDefaultAsync(m => m.Id == id);
         }
 
-        public async Task Add(MovimentacaoEstoque movimentacao)
+        public async Task<MovimentacaoEstoque> Add(MovimentacaoEstoque movimentacao)
         {
             await _context.MovimentacoesEstoque.AddAsync(movimentacao);
+            _context.SaveChanges();
+            return movimentacao;
         }
 
-        public async Task<bool> SalvarAsync()
+        public async Task<MovimentacaoEstoque> Update(MovimentacaoEstoque movimentacao)
         {
-            return await _context.SaveChangesAsync() > 0;
+            var existingMovimentacao = await _context.MovimentacoesEstoque.FindAsync(movimentacao.Id);
+            if (existingMovimentacao == null)
+                throw new ArgumentException("Movimentação não encontrada.");
+
+            existingMovimentacao.PecaId = movimentacao.PecaId;
+            existingMovimentacao.Quantidade = movimentacao.Quantidade;
+            existingMovimentacao.Data = movimentacao.Data;
+            existingMovimentacao.tipoMovimentacao = movimentacao.tipoMovimentacao;
+
+            await _context.SaveChangesAsync();
+            return existingMovimentacao;
+        }
+
+        public async Task<bool> Delete(int id)
+        {
+            var movimentacao = await _context.MovimentacoesEstoque.FindAsync(id);
+            if (movimentacao == null)
+                return false;
+
+            _context.MovimentacoesEstoque.Remove(movimentacao);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

@@ -1,5 +1,7 @@
+using backend.Dto;
 using backend.Models;
 using backend.Repository;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.AspNetCore.Mvc;
 
 namespace backend.Controllers
@@ -31,27 +33,30 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult> Create(Peca peca)
+        public async Task<ActionResult> Create(PecaCreateDTO pecaDto)
         {
+            var peca = new Peca
+            {
+                Nome = pecaDto.Nome!,
+                Estoque = pecaDto.Estoque,
+                Preco = pecaDto.Preco
+            };
+
             await _repository.Add(peca);
-            return CreatedAtAction(nameof(GetById), new { id = peca.Id }, peca);
+            return Ok(peca);
         }
 
         [HttpPut("{id}")]
-        public async Task<ActionResult> Update(int id, Peca peca)
+        public async Task<ActionResult> Update(int id, PecaCreateDTO pecaDto)
         {
-            if (id != peca.Id)
-                return BadRequest("ID da peça não corresponde.");
+            var updatePeca = new Peca
+            {
+                Nome = pecaDto.Nome!,
+                Estoque = pecaDto.Estoque,
+                Preco = pecaDto.Preco
+            };
 
-            var existingPeca = await _repository.GetById(id);
-            if (existingPeca == null)
-                return NotFound("Peça não encontrada.");
-
-            existingPeca.Nome = peca.Nome;
-            existingPeca.Estoque = peca.Estoque;
-            existingPeca.Preco = peca.Preco;
-
-            await _repository.Update(existingPeca);
+            await _repository.Update(id, updatePeca);
             return NoContent();
         }
 

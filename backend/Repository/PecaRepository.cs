@@ -29,13 +29,16 @@ namespace backend.Repository
             return peca;
         }
 
-        public async Task<Peca> Update(Peca peca)
+        public async Task<Peca> Update(int id, Peca peca)
         {
-             var exist =  await _context.Orcamentos.FindAsync(peca.Id);
+            var exist =  await _context.Pecas.FindAsync(id);
             if(exist == null)
             throw new ArgumentException("Peça não existe!");
             
-            _context.Pecas.Update(peca);
+            exist.Nome = peca.Nome == "" ? exist.Nome : peca.Nome;
+            exist.Estoque = peca.Estoque == 0 ? exist.Estoque : peca.Estoque;
+            exist.Preco = peca.Preco == 0 ? exist.Preco : peca.Preco;
+
             _context.SaveChanges();
             
             return peca;
@@ -45,7 +48,7 @@ namespace backend.Repository
         {
             var peca = await GetById(id);
             if (peca == null)
-                return null;
+                throw new ArgumentException("Peça nao encontrada!");
 
             _context.Pecas.Remove(peca);
             _context.SaveChanges();

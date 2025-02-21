@@ -40,15 +40,21 @@ namespace backend.Repository
         public async Task<OrcamentoPecas> Add(OrcamentoPecas orcamentoPeca)
         {
             _context.OrcamentoPecas.Add(orcamentoPeca);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return orcamentoPeca;
         }
 
         public async Task<OrcamentoPecas> Update(OrcamentoPecas orcamentoPeca)
         {
-            _context.OrcamentoPecas.Update(orcamentoPeca);
-            await _context.SaveChangesAsync();
-            return orcamentoPeca;
+            var existingOrcamentoPeca = await _context.OrcamentoPecas.FindAsync(orcamentoPeca.Id);
+            if (existingOrcamentoPeca == null)
+                throw new ArgumentException("Registro não encontrado.");
+
+            existingOrcamentoPeca.Quantidade = orcamentoPeca.Quantidade;
+            existingOrcamentoPeca.Estado = orcamentoPeca.Estado;
+
+            _context.SaveChanges();
+            return existingOrcamentoPeca;
         }
 
         public async Task<bool> Delete(int id)
@@ -58,19 +64,18 @@ namespace backend.Repository
                 return false;
 
             _context.OrcamentoPecas.Remove(entity);
-            await _context.SaveChangesAsync();
+            _context.SaveChanges();
             return true;
         }
 
-        public async Task<bool> UpdateEstado(int id, string estado)
+        public async Task<bool> UpdateEstado(int id, EstadoPeca estado)
         {
             var newEstado = await _context.OrcamentoPecas.FindAsync(id);
             if (newEstado == null)
                 return false;
 
-            newEstado.Estado = EstadoPeca.EmEspera;
-            _context.OrcamentoPecas.Update(newEstado);
-            await _context.SaveChangesAsync();
+            newEstado.Estado = estado;
+            _context.SaveChanges();
             return true;
         }
     }

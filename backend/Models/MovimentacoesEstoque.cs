@@ -11,10 +11,9 @@ namespace backend.Models
         [ForeignKey("Peca")]
         public int PecaId { get; set; }
         public int Quantidade { get; set; }
-        public DateTime Data { get; set; }
-        public string Tipo { get; set; }
+        public DateTime Data { get; set; } = DateTime.Now;
 
-        public Peca Peca { get; set; }
+        public Peca ?Peca { get; set; }
         public TipoMovimentacao tipoMovimentacao { get; set; }
     }
 
