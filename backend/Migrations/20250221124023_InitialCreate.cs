@@ -7,7 +7,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace backend.Migrations
 {
     /// <inheritdoc />
-    public partial class Movimentação : Migration
+    public partial class InitialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -33,7 +33,7 @@ namespace backend.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nome = table.Column<string>(type: "text", nullable: false),
+                    Nome = table.Column<string>(type: "text", nullable: true),
                     Estoque = table.Column<int>(type: "integer", nullable: false),
                     Preco = table.Column<decimal>(type: "numeric", nullable: false)
                 },
@@ -94,7 +94,6 @@ namespace backend.Migrations
                     PecaId = table.Column<int>(type: "integer", nullable: false),
                     Quantidade = table.Column<int>(type: "integer", nullable: false),
                     Data = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
-                    Tipo = table.Column<string>(type: "text", nullable: false),
                     tipoMovimentacao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>

@@ -4,6 +4,6 @@ namespace backend.Services
 {
     public interface IEntregaService
     {
-        Task<Entrega> ObterEnderecoPorCep(string cep);
+        Task<Entrega?> ObterEnderecoPorCep(string cep);
     }
 }

@@ -6,5 +6,6 @@ namespace backend.Repository
     {
         Task<Entrega> AdicionarEntrega(Entrega entrega);
         Task<Entrega> ObterEntregaPorId(int id);
+        Task<IEnumerable<Entrega>> ObterTodasEntregas();
     }
 }

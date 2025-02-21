@@ -1,3 +1,4 @@
+using backend.DTOs;
 using backend.Models;
 using backend.Repository;
 using backend.Services;
@@ -19,17 +20,25 @@ namespace backend.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<Entrega>> CriarEntrega([FromBody] Entrega entrega)
+        public async Task<ActionResult<Entrega>> CriarEntrega([FromBody] EntregaCreateDTO entregaDTO)
         {
-            if (string.IsNullOrEmpty(entrega.Cep))
+            if (string.IsNullOrEmpty(entregaDTO.Cep))
                 return BadRequest("CEP não pode ser vazio.");
 
-            var endereco = await _service.ObterEnderecoPorCep(entrega.Cep);
+            var endereco = await _service.ObterEnderecoPorCep(entregaDTO.Cep);
 
             if (endereco == null)
                 return NotFound("Endereço não encontrado.");
 
+            var entrega = new Entrega
+            {
+                Cep = entregaDTO.Cep,
+                Endereco = endereco.Endereco,
+                OrcamentoId = entregaDTO.OrcamentoId
+            };
+
             entrega.Endereco = endereco.Endereco;
+
             await _repository.AdicionarEntrega(entrega);
 
             return Ok(entrega);
@@ -43,6 +52,13 @@ namespace backend.Controllers
                 return NotFound("Entrega não encontrada.");
 
             return Ok(entrega);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Entrega>>> ObterTodasEntregas()
+        {
+            var entregas = await _repository.ObterTodasEntregas();
+            return Ok(entregas);
         }
     }
 }

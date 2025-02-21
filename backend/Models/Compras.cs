@@ -13,6 +13,6 @@ namespace backend.Models
         public decimal PrecoCusto { get; set; }
         public DateTime DataCompra { get; set; }
 
-        public Peca Peca { get; set; }
+        public Peca ?Peca { get; set; }
     }
 }

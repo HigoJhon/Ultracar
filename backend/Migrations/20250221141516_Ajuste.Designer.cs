@@ -12,8 +12,8 @@ using backend.Context;
 namespace backend.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20250221014800_Movimentação")]
-    partial class Movimentação
+    [Migration("20250221141516_Ajuste")]
+    partial class Ajuste
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -93,10 +93,6 @@ namespace backend.Migrations
                     b.Property<int>("Quantidade")
                         .HasColumnType("integer");
 
-                    b.Property<string>("Tipo")
-                        .IsRequired()
-                        .HasColumnType("text");
-
                     b.Property<int>("tipoMovimentacao")
                         .HasColumnType("integer");
 
@@ -170,7 +166,6 @@ namespace backend.Migrations
                         .HasColumnType("integer");
 
                     b.Property<string>("Nome")
-                        .IsRequired()
                         .HasColumnType("text");
 
                     b.Property<decimal>("Preco")
